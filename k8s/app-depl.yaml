@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      primitive: server
+  template:
+    metadata:
+      labels:
+        primitive: server
+    spec:
+      containers:
+        - name: server
+          image: jorakhachatryan/sample-fullstack-back
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: MYSQL_USERNAME
+              value: users_app
+            - name: MYSQL_DATABASE
+              value: users
+            - name: MYSQL_HOST
+              value: mysql-cluster-ip-service
+            - name: MYSQL_PORT
+              value: '3306'
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: MYSQL_PASSWORD
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: JWT_SECRET
+            - name: JWT_EXPIRATION
+              value: '60m'
+            - name: ALLOWED_ORIGINS
+              value: '*'

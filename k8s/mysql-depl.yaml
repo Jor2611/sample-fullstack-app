@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      primitive: mysql
+  template:
+    metadata:
+      labels:
+        primitive: mysql
+    spec:
+      volumes:
+        - name: mysql-storage
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim
+        - name: mysql-config
+          secret:
+            secretName: mysql-cnf
+      containers:
+        - name: mysql
+          image: mysql:8.3.0
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-storage
+              mountPath: /var/lib/mysql
+            - name: mysql-config
+              mountPath: /etc/mysql/conf.d
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_DATABASE
+              value: users
+            - name: MYSQL_USER
+              value: users_app
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: credentials
+                  key: MYSQL_PASSWORD
+            - name: MYSQL_AUTHENTICATION_PLUGIN
+              value: caching_sha2_password
