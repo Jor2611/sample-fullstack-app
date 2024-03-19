@@ -16,7 +16,9 @@ This repository demonstrates a sample implementation of Fullstack Application us
 Before running the app, make sure you have the following:
 - Minikube 
 - Kubectl
+
 OR
+
 - Nest.js (Node v20.10.0)
 - React.js v18
 - MySQL 8.3.0
