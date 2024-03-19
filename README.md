@@ -85,6 +85,8 @@ $ npm run start:dev
 # 6.Run frontend
 $ npm start
 
+```
+
 ### Improvements
 - Write unit and end-to-end (e2e) tests in the backend.
 - Add migrations for more robust and production ready setup.
