@@ -76,14 +76,14 @@ MYSQL_DATABASE=[DB_DATABASE]
 ALLOWED_ORIGINS='*'
 # ALLOWED_ORIGINS can be array with origins that will be accepted by backend
 
-# 4.Install dependencies in bot directories
+# 4.Install dependencies in both directories
 $ npm install
 
 # 5. Run backend 
-$ npm run start:dev
+$ cd back && npm run start:dev
 
 # 6.Run frontend
-$ npm start
+$ cd front && npm start
 
 ```
 
